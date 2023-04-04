@@ -12,24 +12,28 @@ const TableTd = ({ customer, handleDelete, handleUpdate }) => {
   };
 
   return (
-    <tr className="even:bg-slate-50">
-      <td className="px-6 py-4 whitespace-nowrap w-1/5">
+    <tr className="even:bg-slate-50 ">
+      <td className="font-bold  underline underline-offset-4 px-6 py-4 whitespace-nowrap w-1/5">
         {customer.firstname} {customer.lastname}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap w-1/5">{customer.address}</td>
-      <td className="px-6 py-4 whitespace-nowrap w-1/5">{customer.vat}</td>
+      <td className="font-normal text-sm px-6 py-4 whitespace-nowrap w-1/5">
+        {customer.city}, {customer.address}{' '}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap w-1/5 -tracking-tighter">
+        {customer.vat}
+      </td>
       <td className="px-6 py-4 whitespace-nowrap w-1/5">{formattedDate}</td>
       <td className="px-6 py-4 whitespace-nowrap w-1/5">
         <div className="flex justify-between">
           <p
             onClick={onUpdateClick}
-            className="font-medium p-2 bg-slate-300 rounded-xl shadow-xl hover:cursor-pointer hover:bg-slate-400 duration-300"
+            className="font-medium p-2 text-sm bg-slate-300 rounded-xl shadow-xl hover:cursor-pointer hover:bg-slate-400 duration-300"
           >
             EDIT
           </p>
           <p
             onClick={onDeleteClick}
-            className="font-medium  p-2 bg-slate-300 rounded-xl shadow-xl hover:cursor-pointer hover:bg-slate-400 duration-300"
+            className="font-medium  text-sm p-2 bg-slate-300 rounded-xl shadow-xl hover:cursor-pointer hover:bg-slate-400 duration-300"
           >
             DELETE
           </p>

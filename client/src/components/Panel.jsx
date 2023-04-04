@@ -30,6 +30,8 @@ const Panel = () => {
       console.log(error);
     }
   }
+
+  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);
@@ -114,6 +116,11 @@ const Panel = () => {
     setEditingCustomer(customer);
   };
 
+  const cancelUpdate = () => {
+    reset();
+    setEditingCustomer(null);
+  };
+
   useEffect(() => {
     if (editingCustomer) {
       setValue('firstname', editingCustomer.firstname);
@@ -163,43 +170,69 @@ const Panel = () => {
               />
             </div>
 
-            <button
-              onClick={onClickHandler}
-              type="submit"
-              className="font-thin text-xl h-fit  shadow-sm border-2 w-2/4 rounded-md p-3 bg-black text-white duration-300 hover:opacity-50"
-            >
-              {editingCustomer ? 'Confirm update' : 'Add Customer'}
-            </button>
+            <div className="w-full flex justify-center">
+              <button
+                onClick={onClickHandler}
+                type="submit"
+                className="font-normal text-xl h-fit  shadow-sm border-2 w-2/4 rounded-md p-3 bg-black text-white duration-300 hover:opacity-50"
+              >
+                {editingCustomer ? 'Confirm update' : 'Add Customer'}
+              </button>
+
+              {editingCustomer ? (
+                <button
+                  onClick={cancelUpdate}
+                  type="submit"
+                  className="font-normal text-xl h-fit  shadow-sm border-2 w-2/4 rounded-md p-3 bg-black text-white duration-300 hover:opacity-50"
+                >
+                  Cancel
+                </button>
+              ) : (
+                ''
+              )}
+            </div>
           </div>
         </form>
       </div>
 
       {/* customer list */}
-      <div className="max-w-screen-lg w-full flex flex-col items-center  m-3 h-full scrollable-div overflow-y-scroll">
+      <div
+        className={`max-w-screen-lg w-full flex flex-col items-center  m-3 h-full scrollable-div ${
+          data.length === 0 ? '' : 'overflow-y-scroll'
+        }`}
+      >
         {/* up */}
-        <div className="flex w-full justify-between items-center ">
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <TableNav name="Name" />
-                <TableNav name="Adress" />
-                <TableNav name="VAT" />
-                <TableNav name="Created Date" />
-                <TableNav name="Options" />
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {data.map((customer) => (
-                <TableTd
-                  key={customer._id}
-                  customer={customer}
-                  handleDelete={handleDelete}
-                  handleUpdate={handleUpdate}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+
+        {data.length === 0 ? (
+          <div className="w-full h-full flex items-start justify-center text-3xl font-light">
+            {' '}
+            No customers found
+          </div>
+        ) : (
+          <div className="flex w-full justify-between items-center ">
+            <table className="w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <TableNav name="Name" />
+                  <TableNav name="Adress" />
+                  <TableNav name="VAT" />
+                  <TableNav name="Created Date" />
+                  <TableNav name="Options" />
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {data.map((customer) => (
+                  <TableTd
+                    key={customer._id}
+                    customer={customer}
+                    handleDelete={handleDelete}
+                    handleUpdate={handleUpdate}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
