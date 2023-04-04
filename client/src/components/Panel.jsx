@@ -112,6 +112,9 @@ const Panel = () => {
   // handle update
   const handleUpdate = (customer) => {
     setEditingCustomer(customer);
+  };
+
+  useEffect(() => {
     if (editingCustomer) {
       setValue('firstname', editingCustomer.firstname);
       setValue('lastname', editingCustomer.lastname);
@@ -120,7 +123,7 @@ const Panel = () => {
       setValue('city', editingCustomer.city);
       setValue('zip', editingCustomer.zip);
     }
-  };
+  }, [editingCustomer]);
 
   return (
     <div className="bg-slate-100 flex flex-col w-full h-[calc(100vh-80px)] items-center justify-start mx-auto p-2 md:p-0">
@@ -165,7 +168,7 @@ const Panel = () => {
               type="submit"
               className="font-thin text-xl h-fit  shadow-sm border-2 w-2/4 rounded-md p-3 bg-black text-white duration-300 hover:opacity-50"
             >
-              Add Customer
+              {editingCustomer ? 'Confirm update' : 'Add Customer'}
             </button>
           </div>
         </form>
